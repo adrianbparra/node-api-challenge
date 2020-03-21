@@ -15,7 +15,6 @@ server.use(morgan(':method :url :status :res[content-length] - :response-time ms
 
 
 
-
 server.get("/", (req,res)=>{
     res.send(`Welcome to Adrian's Server!`)
 })
@@ -24,8 +23,12 @@ server.get("/", (req,res)=>{
 server.use("/api/projects", projectsRouter)
 server.use("/api/actions", actionRouter)
 
+server.use(errorLogger);
 
-
+function errorLogger (req,res,next) {
+    res.status(404).json({errorMessage: "URI does not exist!"})
+    next()
+}
 
 
 
